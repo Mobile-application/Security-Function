@@ -2,15 +2,9 @@ local widget = require ("widget")
 
 local recordStatus -- tracks whether the microphone is on or not
 
-
-
-
-
 local filePath = system.pathForFile('myRecording.aif', system.DocumentsDirectory)
 r = media.newRecording(filePath)
 r:setSampleRate(8000) -- Generally the minimum samplerate though some systems may not support
-
-
 
 -- function to start Recorder
 function recNow ()
@@ -22,6 +16,7 @@ function recNow ()
 		r:startRecording()
 		recButton:setLabel("Disable Microphone Block")
 		recStatus = true
+		-- if recording fails the function will change the sample rate 
 		if r:isRecording() == false then
 			r:setSampleRate(11025) --Sets sample rate to second lowest if 8000Hz is unsupported
 			r:startRecording()
@@ -31,7 +26,6 @@ function recNow ()
 		end
 	end
 end
-
 
 --Button for Recorder
 recButton = widget.newButton(
