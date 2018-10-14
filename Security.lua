@@ -36,53 +36,54 @@ function scene:create( event )
 	head:setFillColor(1,1,1)
 	sceneGroup:insert(head)
 
-local recordStatus -- tracks whether the microphone is on or not
+	local recordStatus -- tracks whether the microphone is on or not
 
-local filePath = system.pathForFile('myRecording.aif', system.DocumentsDirectory)
-r = media.newRecording(filePath)
-r:setSampleRate(8000) -- Generally the minimum samplerate though some systems may not support
+	local filePath = system.pathForFile('myRecording.aif', system.DocumentsDirectory)
+	r = media.newRecording(filePath)
+	r:setSampleRate(8000) -- Generally the minimum samplerate though some systems may not support
 
--- function to start Recorder
-function recNow ()
-	if recStatus == true then
-		r:stopRecording()
-		recButton:setLabel("Enable Microphone Block")
-		recStatus = false
-	else
-		r:startRecording()
-		recButton:setLabel("Disable Microphone Block")
-		recStatus = true
-		-- if recording fails the function will change the sample rate 
-		if r:isRecording() == false then
-			r:setSampleRate(11025) --Sets sample rate to second lowest if 8000Hz is unsupported
+	-- function to start Recorder
+	function recNow ()
+		if recStatus == true then
+			r:stopRecording()
+			recButton:setLabel("Enable Microphone Block")
+			recStatus = false
+		else
 			r:startRecording()
+			recButton:setLabel("Disable Microphone Block")
+			recStatus = true
+			-- if recording fails the function will change the sample rate 
 			if r:isRecording() == false then
-				r:setSampleRate() --sets Sample to rate to default at 44100Hz
+				r:setSampleRate(11025) --Sets sample rate to second lowest if 8000Hz is unsupported
+				r:startRecording()
+				if r:isRecording() == false then
+					r:setSampleRate() --sets Sample to rate to default at 44100Hz
+					r:startRecording()
+				end
 			end
 		end
 	end
-end
 
---Button for Recorder
-recButton = widget.newButton(
-{
-    label = "Enable Microphone Block",
-    x = display.contentCenterX,
-    y = display.contentCenterY,
-	fontSize = 24,
-    onEvent = myEventListener,
-    shape = "roundedRect",
-	width = 300,
-	height = 60,
-	fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }
-}
-    )
-
+	--Button for Recorder
+	recButton = widget.newButton(
+	{
+	    label = "Enable Microphone Block",
+	    x = display.contentCenterX,
+	    y = display.contentCenterY,
+		fontSize = 24,
+	    onEvent = myEventListener,
+	    shape = "roundedRect",
+		width = 300,
+		height = 60,
+		fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }
+	}
+	    )
 
 
-sceneGroup:insert(recButton) 
-recButton:addEventListener ("tap", recNow)
 
+	sceneGroup:insert(recButton) 
+	recButton:addEventListener ("tap", recNow)
+ 
 end 
 -- show()
 function scene:show( event )
