@@ -46,7 +46,7 @@ function scene:create( event )
     local sceneGroup = self.view
 	
 	--adding background
-	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,600,display.contentHeight)
+	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,700,display.contentHeight)
 	bg:setFillColor( 1,1 , 1)
 	
 	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,90)
@@ -64,7 +64,7 @@ function scene:create( event )
 	sceneGroup:insert(backImage)
 	backImage:addEventListener("tap", complaint)
 	
-	head = display.newText("Complaint", display.contentCenterX*0.90,display.contentCenterY*0.05,"Arial",25)
+	head = display.newText("Make a Complaint", display.contentCenterX*0.90,display.contentCenterY*0.05,"Arial",25)
 	head:setFillColor(1,1,1)
 	sceneGroup:insert(head)
 	
@@ -89,7 +89,7 @@ if not file then
 			   y = 150,
 			   fontSize = native.SystemFont,
 			   width = 280,
-			   height = 200,
+			   height = 220,
 			   align = "left"
 			}
 			local textBox = display.newText( surveyText)
@@ -114,7 +114,7 @@ if not file then
 		onEvent = myeventListener,
 		emboss = false,
 		x = display.contentCenterX,
-		y = 230,
+		y = 200,
 		width=220,
 		shape = "roundedRect",
 		fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }
@@ -146,10 +146,10 @@ if not file then
 			local surveyText = {
 			   text =  line,
 	           x = display.contentCenterX,
-			   y = 370,
+			   y = 350,
 			   fontSize = native.SystemFont,
 			   width = 280,
-			   height = 210,
+			   height = 220,
 			   align = "left"
 			}
 			local textBox = display.newText( surveyText)
@@ -162,11 +162,11 @@ if not file then
 	
 		local complaintLink = widget.newButton(
 	{
-		label = "Click here to make\n      a complaint",
+		label = "Click here to complaint",
 		onEvent = myeventListener,
 		emboss = false,
 		x = display.contentCenterX,
-		y = 450,
+		y = 410,
 		width=220,
 		shape = "roundedRect",
 		fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }

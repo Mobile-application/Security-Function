@@ -27,6 +27,23 @@ local function complaint ()
 	composer.gotoScene("Complaint",{effect = "slideLeft", time = 500})
 end
 
+-- ScrollView listener
+local function scrollListener( event )
+ 
+    local phase = event.phase
+    local direction = event.direction
+	
+	-- If the scrollview has reached it's scroll limit.
+	if event.limitReached then
+		if "up"== direction then
+			print("Reached Top Limit")
+		elseif "down" == direction then
+			print("Reached Bottom Limit")
+		end
+	end
+	
+	return true
+end
 
 
 
@@ -43,10 +60,10 @@ function scene:create( event )
     local sceneGroup = self.view
 	
 	--adding background
-	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,display.contentHeight)
+	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,600,display.contentHeight)
 	bg:setFillColor( 1,1 , 1)
 	
-	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,65)
+	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,90)
 	bg2:setFillColor(0.823529 ,0.411765 ,0.117647)
 	sceneGroup:insert(bg)
 	sceneGroup:insert(bg2)
@@ -64,6 +81,7 @@ function scene:create( event )
 	head = display.newText("Complaint", display.contentCenterX*0.90,display.contentCenterY*0.05,"Arial",25)
 	head:setFillColor(1,1,1)
 	sceneGroup:insert(head)
+	
 	
 	-- Path for the file to read
 local path = system.pathForFile( "file2.txt", system.ResourceDirectory )

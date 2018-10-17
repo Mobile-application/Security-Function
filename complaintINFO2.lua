@@ -2,7 +2,7 @@ composer = require( "composer" )
  
 local scene = composer.newScene()
  
- local function Home ()	
+local function Home ()	
 composer.gotoScene("FirstScene",{effect = "slideLeft", time = 500})
 
 end
@@ -10,7 +10,7 @@ end
 
 
 --Adding Welcome message
---local function header()
+--local function header
 --display.newText("Welcome",display.contentCenterX,display.contentCenterY, "Comic Sans MS", 50)
 --end
 --header()
@@ -22,6 +22,7 @@ end
  
 local widget = require ("widget")
 
+
 local function complaint ()	
 	composer.gotoScene("Complaint",{effect = "slideLeft", time = 500})
 end
@@ -30,11 +31,7 @@ end
 
 
 local function hyperLink()
-  system.openURL("https://www.oaic.gov.au/individuals/privacy-complaint-checker/question-1")
-end
-
-local function hyperLink2()
-	system.openURL("https://forms.business.gov.au/smartforms/landing.htm?formCode=APC_PC")
+  system.openURL("https://report.acorn.gov.au")
 end
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -46,21 +43,21 @@ function scene:create( event )
     local sceneGroup = self.view
 	
 	--adding background
-	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,600,display.contentHeight)
+	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,display.contentHeight)
 	bg:setFillColor( 1,1 , 1)
 	
-	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,90)
+	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,65)
 	bg2:setFillColor(0.823529 ,0.411765 ,0.117647)
 	sceneGroup:insert(bg)
 	sceneGroup:insert(bg2)
-	
 	
 	HomeImage = display.newImage("HomeIcon.png", 280, -7 )
 	sceneGroup:insert(HomeImage)
 	HomeImage:addEventListener("tap", Home)
 	
+	
 	backImage = display.newImage("back.png", 30, -7 )
-	--myImage:translate(140,450)
+	--backImage:translate(140,450)
 	sceneGroup:insert(backImage)
 	backImage:addEventListener("tap", complaint)
 	
@@ -69,7 +66,7 @@ function scene:create( event )
 	sceneGroup:insert(head)
 	
 	-- Path for the file to read
-local path = system.pathForFile( "file1.txt", system.ResourceDirectory )
+local path = system.pathForFile( "file2.txt", system.ResourceDirectory )
  
 -- Open the file handle
 local file, errorString = io.open( path, "r" )
@@ -83,13 +80,12 @@ if not file then
 			print( line )
 			
 			local surveyText = {
-			   id = "surveyText",
 			   text =  line,
 	           x = display.contentCenterX,
-			   y = 150,
+			   y = display.contentCenterX,
 			   fontSize = native.SystemFont,
 			   width = 280,
-			   height = 200,
+			   height = 220,
 			   align = "left"
 			}
 			local textBox = display.newText( surveyText)
@@ -100,82 +96,28 @@ if not file then
 		io.close( file )
 	end
 
-
-
-  
- 
-
-
-
+	
 	local surveyLink = widget.newButton(
 	{
 		id = "link",
-		label = "Click here to see survey",
+		label = "Click here to complain",
 		onEvent = myeventListener,
 		emboss = false,
 		x = display.contentCenterX,
-		y = 230,
-		width=220,
+		y = 300,
 		shape = "roundedRect",
 		fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }
-
 	}
 	)
 	sceneGroup:insert(surveyLink)
 	surveyLink:addEventListener ("tap", hyperLink)
+	
 
 	--Adding Timer in this app which display how long a user is seing the app
 	
 	--sceneGroup:insert(Timer)
 	
-	
-		-- Path for the file to read
-local path = system.pathForFile( "file3.txt", system.ResourceDirectory )
  
--- Open the file handle
-local file, errorString = io.open( path, "r" )
-if not file then
-		-- Error occurred; output the cause
-		print( "File error: " .. errorString )
-	else
-		-- Output lines
-		for line in file:lines() do
-		
-			print( line )
-			
-			local surveyText = {
-			   text =  line,
-	           x = display.contentCenterX,
-			   y = 370,
-			   fontSize = native.SystemFont,
-			   width = 280,
-			   height = 210,
-			   align = "left"
-			}
-			local textBox = display.newText( surveyText)
-			textBox:setFillColor(0,0,0)
-			sceneGroup:insert(textBox)
-		end
-		-- Close the file handle
-		io.close( file )
-	end
-	
-		local complaintLink = widget.newButton(
-	{
-		label = "Click here to make\n      a complaint",
-		onEvent = myeventListener,
-		emboss = false,
-		x = display.contentCenterX,
-		y = 450,
-		width=220,
-		shape = "roundedRect",
-		fillColor = { default = { 1, 0.7, 0.5}, over = { 1, 0.7, 0.5} }
-	}
-	)
-	sceneGroup:insert(complaintLink)
-	complaintLink:addEventListener ("tap", hyperLink2)
-
-	
 end
  
  

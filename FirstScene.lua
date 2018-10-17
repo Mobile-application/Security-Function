@@ -63,7 +63,7 @@ function scene:create( event )
 	sceneGroup:insert(myImage2)
 	myImage2:addEventListener("tap", complaint)
 	--Displaying security icon and text
-	Complaint = display.newText("Microphone\n  Security",display.contentCenterX*0.50,display.contentCenterY*1.0, "Helvetica", 25)
+	Complaint = display.newText("Security\nMonitoring",display.contentCenterX*0.50,display.contentCenterY*1.0, "Helvetica", 25)
 	sceneGroup:insert(Complaint)
 	myImage2 = display.newImage("contact7.png", display.contentCenterX*0.45, display.contentCenterY*0.75)
 	sceneGroup:insert(myImage2)
