@@ -1,26 +1,26 @@
------------------------------------------------------------------------------------------
---
--- main.lua
---
------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+----
+---- main.lua
+----
+-------------------------------------------------------------------------------------------
 
 local composer = require( "composer" )
  
 local scene = composer.newScene()
 local widget = require( "widget" )
  
---sending user back to the Home Screen 
+----sending user back to the Home Screen 
 local function Home ()	
 composer.gotoScene("FirstScene",{effect = "slideLeft", time = 500})
 
 end 
 
---sending user back to the previous screen
+----sending user back to the previous screen
 local function back ()	
 composer.gotoScene("RightsList",{effect = "slideRight", time = 500})
 
 end 
- -- ScrollView listener
+ ---- ScrollView listener
 local function scrollListener( event )
  
     local phase = event.phase
@@ -37,41 +37,41 @@ local function scrollListener( event )
 	
 	return true
 end
--- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
+---- Code outside of the scene event functions below will only be executed ONCE unless
+---- the scene is removed entirely (not recycled) via "composer.removeScene()"
+---- -----------------------------------------------------------------------------------
  
---link for brief description about this right
+----link for brief description about this right
 local function hyperLink()
   system.openURL("https://www.legislation.gov.au/Details/C2014C00076")
 end
  
--- -----------------------------------------------------------------------------------
--- Scene event functions
+---- -----------------------------------------------------------------------------------
+---- Scene event functions
 -- -----------------------------------------------------------------------------------
  local bg
--- create()
+---- create()
 function scene:create( event )
  
     local sceneGroup = self.view
-	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,display.contentHeight)
+	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,display.contentHeight*1.20)
 	bg:setFillColor( 0.823529 ,0.411765 ,0.117647)
 	sceneGroup:insert(bg)
 	
-	--title of the scene LR!
-	head = display.newText("Privacy Act 1988(Cth)", display.contentCenterX*0.90,display.contentCenterY*0.10,"Arial",20)
-	--head:setFillColor(1,0,0)
+	----title of the scene LR!
+	head = display.newText("Privacy Act 1988(Cth)", display.contentCenterX*0.90,display.contentCenterY*0.05,"Arial",20)
+	----head:setFillColor(1,0,0)
 	sceneGroup:insert(head)
 	
-	--Display link for LR1
+	----Display link for LR1
 	
 	local Link = widget.newButton(
 	{
 		id = "link",
 		label = "Read Online",
 		width='98',
-		height='30',
+		height='23',
 		onEvent = myeventListener,
 		emboss = false,
 		x = display.contentCenterX*0.90,
@@ -86,17 +86,17 @@ function scene:create( event )
 	sceneGroup:insert(Link)
 	Link:addEventListener("tap", hyperLink)
 	
-	--home icon to send user to the home screen
-	HomeImage = display.newImage("HomeIcon.png", 280, 20 )
+	----home icon to send user to the home screen
+	HomeImage = display.newImage("HomeIcon.png", 280, 2 )
 	sceneGroup:insert(HomeImage)
 	HomeImage:addEventListener("tap", Home)
 	
-	--sending user back to the previous screeen icon
-	BackImage = display.newImage("back.png", 25, 20 )
+	----sending user back to the previous screeen icon
+	BackImage = display.newImage("back.png", 25, 2 )
 	sceneGroup:insert(BackImage)
 	BackImage:addEventListener("tap", back)
 	
-	-- Create the widget for scroll view
+	---- Create the widget for scroll view
 	local scrollView = widget.newScrollView(
 		{
 			top = 78,
@@ -163,54 +163,54 @@ text.x = display.contentCenterX
 scrollView:insert(text)
  
  end
--- show()
+---- show()
 function scene:show( event )
  
     local sceneGroup = self.view
     local phase = event.phase
 	
     if ( phase == "will" ) then
-        -- Code here runs when the scene is still off screen (but is about to come on screen)
+        ---- Code here runs when the scene is still off screen (but is about to come on screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs when the scene is entirely on screen
+        ---- Code here runs when the scene is entirely on screen
 	
     end
 end
  
  
--- hide()
+---- hide()
 function scene:hide( event )
  
     local sceneGroup = self.view
     local phase = event.phase
  
     if ( phase == "will" ) then
-        -- Code here runs when the scene is on screen (but is about to go off screen)
+        ---- Code here runs when the scene is on screen (but is about to go off screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs immediately after the scene goes entirely off screen
+        ---- Code here runs immediately after the scene goes entirely off screen
  
     end
 end
  
  
--- destroy()
+---- destroy()
 function scene:destroy( event )
  
     local sceneGroup = self.view
-    -- Code here runs prior to the removal of scene's view
+    ---- Code here runs prior to the removal of scene's view
  
 end
  
  
--- -----------------------------------------------------------------------------------
--- Scene event function listeners
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
+---- Scene event function listeners
+---- -----------------------------------------------------------------------------------
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
  
 return scene

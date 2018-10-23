@@ -1,12 +1,16 @@
+-------------------------------------------------------------------------------------------
+----
+---- main.lua
+----
+-------------------------------------------------------------------------------------------
+
 composer = require( "composer" )
  
 local scene = composer.newScene()
- 
+ -- home button 
 local function Home ()	
 composer.gotoScene("FirstScene",{effect = "slideLeft", time = 500})
-
 end
-
 
 
 --Adding Welcome message
@@ -22,18 +26,18 @@ end
  
 local widget = require ("widget")
 
-
+--- input from complaint file 
 local function complaint ()	
 	composer.gotoScene("Complaint",{effect = "slideLeft", time = 500})
 end
 
--- ScrollView listener
+---- ScrollView listener
 local function scrollListener( event )
  
     local phase = event.phase
     local direction = event.direction
 	
-	-- If the scrollview has reached it's scroll limit.
+	---- If the scrollview has reached it's scroll limit.
 	if event.limitReached then
 		if "up"== direction then
 			print("Reached Top Limit")
@@ -46,35 +50,35 @@ local function scrollListener( event )
 end
 
 
-
+---- create hyperlink to make a complaint 
 local function hyperLink()
   system.openURL("https://report.acorn.gov.au")
 end
--- -----------------------------------------------------------------------------------
--- Scene event functions
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
+---- Scene event functions
+---- -----------------------------------------------------------------------------------
  
--- create()
+---- create()
 function scene:create( event )
  
     local sceneGroup = self.view
 	
-	--adding background
+	----adding background
 	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,600,display.contentHeight)
 	bg:setFillColor( 1,1 , 1)
-	
+	---- add heading 
 	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,90)
 	bg2:setFillColor(0.823529 ,0.411765 ,0.117647)
 	sceneGroup:insert(bg)
 	sceneGroup:insert(bg2)
-	
+	---- create home button 
 	HomeImage = display.newImage("HomeIcon.png", 280, -7 )
 	sceneGroup:insert(HomeImage)
 	HomeImage:addEventListener("tap", Home)
 	
-	
+	---- create back button 
 	backImage = display.newImage("back.png", 30, -7 )
-	--backImage:translate(140,450)
+	----backImage:translate(140,450)
 	sceneGroup:insert(backImage)
 	backImage:addEventListener("tap", complaint)
 	
@@ -83,16 +87,16 @@ function scene:create( event )
 	sceneGroup:insert(head)
 	
 	
-	-- Path for the file to read
+	---- Path for the file to read
 local path = system.pathForFile( "file2.txt", system.ResourceDirectory )
  
--- Open the file handle
+---- Open the file handle
 local file, errorString = io.open( path, "r" )
 if not file then
-		-- Error occurred; output the cause
+		---- Error occurred; output the cause
 		print( "File error: " .. errorString )
 	else
-		-- Output lines
+		---- Output lines
 		for line in file:lines() do
 		
 			print( line )
@@ -110,11 +114,11 @@ if not file then
 			textBox:setFillColor(0,0,0)
 			sceneGroup:insert(textBox)
 		end
-		-- Close the file handle
+		---- Close the file handle
 		io.close( file )
 	end
 
-	
+	ss
 	local surveyLink = widget.newButton(
 	{
 		id = "link",
@@ -131,15 +135,15 @@ if not file then
 	surveyLink:addEventListener ("tap", hyperLink)
 	
 
-	--Adding Timer in this app which display how long a user is seing the app
+	----Adding Timer in this app which display how long a user is seing the app
 	
-	--sceneGroup:insert(Timer)
+	----sceneGroup:insert(Timer)
 	
  
 end
  
  
--- show()
+---- show()
 function scene:show( event )
  
     local sceneGroup = self.view
@@ -149,44 +153,43 @@ function scene:show( event )
         -- Code here runs when the scene is still off screen (but is about to come on screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs when the scene is entirely on screen
+        ---- Code here runs when the scene is entirely on screen
  
     end
 end
  
  
--- hide()
+---- hide()
 function scene:hide( event )
  
     local sceneGroup = self.view
     local phase = event.phase
  
     if ( phase == "will" ) then
-        -- Code here runs when the scene is on screen (but is about to go off screen)
+        ---- Code here runs when the scene is on screen (but is about to go off screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs immediately after the scene goes entirely off screen
+        ---- Code here runs immediately after the scene goes entirely off screen
  
     end
 end
  
  
--- destroy()
+---- destroy()
 function scene:destroy( event )
  
     local sceneGroup = self.view
-    -- Code here runs prior to the removal of scene's view
- 
+    ---- Code here runs prior to the removal of scene's view 
 end
  
  
--- -----------------------------------------------------------------------------------
--- Scene event function listeners
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
+---- Scene event function listeners
+---- -----------------------------------------------------------------------------------
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
  
 return scene

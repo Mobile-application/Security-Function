@@ -1,7 +1,13 @@
+-------------------------------------------------------------------------------------------
+----
+---- main.lua
+----
+-------------------------------------------------------------------------------------------
 local composer = require( "composer" )
  
 local scene = composer.newScene()
 
+----sending user back to the Home Screen 
 local function Home ()	
 composer.gotoScene("FirstScene",{effect = "slideLeft", time = 500})
 end
@@ -10,10 +16,15 @@ local function homepage ()
 	composer.gotoScene("FirstScene",{effect = "slideLeft", time = 500})
 end
 
+----sending user back to the previous screen
 local function CameraInfo()
   composer.gotoScene("CameraInfo",{effect = "slideLeft", time = 500})
 end 
 
+---- -----------------------------------------------------------------------------------
+---- Code outside of the scene event functions below will only be executed ONCE unless
+---- the scene is removed entirely (not recycled) via "composer.removeScene()"
+---- -----------------------------------------------------------------------------------
 
 
 local widget = require ("widget")
@@ -21,28 +32,28 @@ function scene:create( event )
  
     local sceneGroup = self.view
 	
-	--showing a backgroynd
+	--showing a background
 	bg=display.newRect(display.contentCenterX,display.contentCenterY,display.contentWidth,600,display.contentHeight)
 	bg:setFillColor( 1,1 , 1)
-	
+	--- adding heading
 	bg2=display.newRect(display.contentCenterX, 0,display.contentWidth,90)
 	bg2:setFillColor(0.823529 ,0.411765 ,0.117647)
 	sceneGroup:insert(bg)
 	sceneGroup:insert(bg2)
 	
-	
+	---- adding back button 
 	backImage = display.newImage("back.png", 30, -7 )
 	--myImage:translate(140,450)
 	sceneGroup:insert(backImage)
 	backImage:addEventListener("tap", homepage)
 	
-	-- Code here runs when the scene is first created but has not yet appeared on screen
+	---- Code here runs when the scene is first created but has not yet appeared on screen
 	head = display.newText("Security Monitoring  ", display.contentCenterX*1.1,display.contentCenterY*0.01,"Arial",23)
 	head:setFillColor(1,1,1)
 	sceneGroup:insert(head)
 	
 	
-	--Displaying Camera security icon and text
+	----Displaying Camera security icon and text
 	local button = widget.newButton(
 	{
 		label = "Camera  Privacy",
@@ -62,13 +73,13 @@ function scene:create( event )
 	button:addEventListener("tap", CameraInfo)
 
 
-	local recordStatus -- tracks whether the microphone is on or not
+	local recordStatus ---- tracks whether the microphone is on or not
 
 	local filePath = system.pathForFile('myRecording.aif', system.DocumentsDirectory)
 	r = media.newRecording(filePath)
-	r:setSampleRate(8000) -- Generally the minimum samplerate though some systems may not support
+	r:setSampleRate(8000) ---- Generally the minimum samplerate though some systems may not support
 
-	-- function to start Recorder
+	---- function to start Recorder
 	function recNow ()
 		if recStatus == true then
 			r:stopRecording()
@@ -78,19 +89,23 @@ function scene:create( event )
 			r:startRecording()
 			recButton:setLabel("Disable Microphone Block")
 			recStatus = true
-			-- if recording fails the function will change the sample rate 
+			---- if recording fails the function will change the sample rate 
 			if r:isRecording() == false then
-				r:setSampleRate(11025) --Sets sample rate to second lowest if 8000Hz is unsupported
+				r:setSampleRate(11025) ----Sets sample rate to second lowest if 8000Hz is unsupported
 				r:startRecording()
 				if r:isRecording() == false then
-					r:setSampleRate() --sets Sample to rate to default at 44100Hz
+					r:setSampleRate() ----sets Sample to rate to default at 44100Hz
 					r:startRecording()
+					if r:isRecording() == false then
+						recStatus = false
+						recButton:setLabel(" Microphone block \ncannot be activated.")
+					end
 				end
 			end
 		end
 	end
 
-	--Button for Recorder
+	----Button for Recorder
 	recButton = widget.newButton(
 	{
 	    label = "Enable Microphone Block",
@@ -111,55 +126,55 @@ function scene:create( event )
 	recButton:addEventListener ("tap", recNow)
  
 end 
--- show()
+---- show()
 function scene:show( event )
  
     local sceneGroup = self.view
     local phase = event.phase
  
     if ( phase == "will" ) then
-        -- Code here runs when the scene is still off screen (but is about to come on screen)
+        ---- Code here runs when the scene is still off screen (but is about to come on screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs when the scene is entirely on screen
+        ---- Code here runs when the scene is entirely on screen
  
     end
 end
  
  
--- hide()
+---- hide()
 function scene:hide( event )
  
     local sceneGroup = self.view
     local phase = event.phase
  
     if ( phase == "will" ) then
-        -- Code here runs when the scene is on screen (but is about to go off screen)
+        ---- Code here runs when the scene is on screen (but is about to go off screen)
  
     elseif ( phase == "did" ) then
-        -- Code here runs immediately after the scene goes entirely off screen
+        ---- Code here runs immediately after the scene goes entirely off screen
  
     end
 end
  
  
--- destroy()
+---- destroy()
 function scene:destroy( event )
  
     local sceneGroup = self.view
-    -- Code here runs prior to the removal of scene's view
+    ---- Code here runs prior to the removal of scene's view
  
 end
  
  
--- -----------------------------------------------------------------------------------
--- Scene event function listeners
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
+---- Scene event function listeners
+---- -----------------------------------------------------------------------------------
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
--- -----------------------------------------------------------------------------------
+---- -----------------------------------------------------------------------------------
  
 return scene
 
